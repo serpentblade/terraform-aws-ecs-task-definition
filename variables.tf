@@ -54,6 +54,12 @@ variable "environment" {
   type        = list(map(string))
 }
 
+variable "environmentFiles" {
+  default     = []
+  description = "The S3 ARN for containing .env-style environment files.  Files must have .env extension"
+  type        = list(string)
+}
+
 variable "essential" {
   default     = true
   description = "If the essential parameter of a container is marked as true, and that container fails or stops for any reason, all other containers that are part of the task are stopped"
@@ -205,9 +211,9 @@ variable "resourceRequirements" {
 }
 
 variable "secrets" {
-  default     = []
-  description = "The secrets to pass to the container"
-  type        = list(string)
+  default     = {}
+  description = "The secrets to pass to the container."
+  type        = map(string)
 }
 
 variable "systemControls" {

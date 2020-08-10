@@ -126,6 +126,7 @@ By default, this module creates a task definition with a single container defini
 | dockerSecurityOptions | A list of strings to provide custom labels for SELinux and AppArmor multi-level security systems | `list(string)` | `[]` | no |
 | entryPoint | The entry point that is passed to the container | `list(string)` | `[]` | no |
 | environment | The environment variables to pass to a container | `list(map(string))` | `[]` | no |
+| environmentFiles | The environment files to pass to a container | `list(string)` | `[]` | no |
 | essential | If the essential parameter of a container is marked as true, and that container fails or stops for any reason, all other containers that are part of the task are stopped | `bool` | `true` | no |
 | execution\_role\_arn | The Amazon Resource Name (ARN) of the task execution role that the Amazon ECS container agent and the Docker daemon can assume | `string` | `""` | no |
 | extraHosts | A list of hostnames and IP address mappings to append to the /etc/hosts file on the container | `list(string)` | `[]` | no |
@@ -153,7 +154,7 @@ By default, this module creates a task definition with a single container defini
 | repositoryCredentials | The private repository authentication credentials to use | `map(string)` | `{}` | no |
 | requires\_compatibilities | The launch type required by the task | `list(string)` | `[]` | no |
 | resourceRequirements | The type and amount of a resource to assign to a container | `list(string)` | `[]` | no |
-| secrets | The secrets to pass to the container | `list(string)` | `[]` | no |
+| secrets | The secrets to pass to the container.  Variable name => Full ARN of SSM or Secrets Manager secret | `map(string)` | `{}` | no |
 | systemControls | A list of namespaced kernel parameters to set in the container | `list(string)` | `[]` | no |
 | tags | The metadata that you apply to the task definition to help you categorize and organize them | `map(string)` | `{}` | no |
 | task\_role\_arn | The short name or full Amazon Resource Name (ARN) of the IAM role that containers in this task can assume | `string` | `""` | no |

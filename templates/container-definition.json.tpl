@@ -8,6 +8,7 @@
   "dockerSecurityOptions": ${dockerSecurityOptions},
   "entryPoint": ${entryPoint},
   "environment": ${environment},
+  "environmentFiles": ${environmentFiles},
   "essential": ${essential},
   "extraHosts": ${extraHosts},
   "healthCheck": ${healthCheck},

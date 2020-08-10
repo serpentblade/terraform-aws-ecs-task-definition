@@ -65,7 +65,6 @@ locals {
 
   repositoryCredentials = jsonencode(var.repositoryCredentials)
   resourceRequirements  = jsonencode(var.resourceRequirements)
-  secrets               = jsonencode(var.secrets)
   systemControls        = jsonencode(var.systemControls)
 
   ulimits = replace(jsonencode(var.ulimits), local.classes["digit"], "$1")
@@ -85,6 +84,16 @@ locals {
   container_definition = var.register_task_definition ? format("[%s]", data.template_file.container_definition.rendered) : format("%s", data.template_file.container_definition.rendered)
 
   container_definitions = replace(local.container_definition, "/\"(null)\"/", "$1")
+
+  environmentFiles = jsonencode([
+    for value in var.environmentFiles:
+    { type: "s3", value: value }
+  ])
+
+  secrets = jsonencode([
+    for key, value in var.secrets:
+    { name: key, valueFrom: value }
+  ])
 }
 
 data "template_file" "container_definition" {
@@ -100,6 +109,7 @@ data "template_file" "container_definition" {
     dockerSecurityOptions  = local.dockerSecurityOptions == "[]" ? "null" : local.dockerSecurityOptions
     entryPoint             = local.entryPoint == "[]" ? "null" : local.entryPoint
     environment            = local.environment == "[]" ? "null" : local.environment
+    environmentFiles       = local.environmentFiles == "[]" ? "null" : local.environmentFiles
     essential              = var.essential ? true : false
     extraHosts             = local.extraHosts == "[]" ? "null" : local.extraHosts
     healthCheck            = local.healthCheck == "{}" ? "null" : local.healthCheck
